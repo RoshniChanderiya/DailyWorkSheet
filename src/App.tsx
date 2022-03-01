@@ -1,20 +1,22 @@
-import React from 'react';
-import StatePro from './components/StatePro';
-// import Home from './components/Home';
-
-
-
-function App() {
+import React, { useState } from 'react';
+import "./App.css"
+import InputField from './components/InputField';
+import { Todo } from './components/model';
+import TodoList from './components/TodoList';
+const App: React.FC = () => {
+  const [todo, setTodo] = useState<string>("");
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const handleSubmit = (e: React.FormEvent): void => {
+    e.preventDefault();
+    setTodos([...todos, { id: Date.now(), todo, isDone: false }]);
+    setTodo("");
+  }
+  console.log(todos);
   return (
-    <div>
-    <h1>hii</h1>
-    <StatePro />
-    {/* <Home  name="Roshni" age={23}  />
-    <Home  name="Aarti" age={23}  />
-    <Home  name="Ruchi" age={20}  />
-    <Home  name="Dolly" age={21}  >
-      <span style={{color:"blue"}}>salary - 5k</span>
-      </Home> */}
+    <div className='App'>
+      <span className='heading'>Today's my task</span>
+      <InputField todo={todo} setTodo={setTodo} handleSubmit={handleSubmit} />
+      <TodoList todos={todos} setTodos={setTodos} />
     </div>
   );
 }
